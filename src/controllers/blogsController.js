@@ -64,13 +64,13 @@ const getblogs = async function (req, res) {
 const updateBlog = async function (req, res) {
 
     try {
-        let blogId = req.query.blogId;
+        let blogId = req.params.blogId;
         let blog = await blogModel.findById(blogId);
 
         if (!blog) {
             return res.status(404).send({ status: false, msg: "No such blog exists" });
         }
-        let updatedBlog = await blogModel.updateMany({ _id: blogId }, {
+        let updatedBlog = await blogModel.findOneAndUpdate({ _id: blogId }, {
             title: req.body.title, body: req.body.body, tags: req.body.tags, isPublished: true,
             publishedAt: Date.now(), subcategory: req.body.subcategory,category: req.body.category
         }, { new: true })
@@ -87,7 +87,7 @@ const updateBlog = async function (req, res) {
 const deleteUser = async function (req, res) {
 
     try {
-        let blogId = req.query.blogId;
+        let blogId = req.params.blogId;
         let blog = await blogModel.findById(blogId);
 
         if (!blog) {
