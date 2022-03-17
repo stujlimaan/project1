@@ -48,7 +48,7 @@ const getblogs = async function (req, res) {
             if (data.length == 0) {
                 return res.status(404).send({ status: false, msg: "no blogs " });
             } else {
-                res.status(200).send({ status: true, message: "Successfully fetched all blogs", data: data })
+                res.status(200).send({ status: true, message: "Successfully fetched all blogs", data: data ,count:data.length})
             }
         }
     } catch (err) {
@@ -72,10 +72,11 @@ const updateBlog = async function (req, res) {
         }
         let updatedBlog = await blogModel.updateMany({ _id: blogId }, {
             title: req.body.title, body: req.body.body, tags: req.body.tags, isPublished: true,
-            publishedAt: Date.now(), subCategory: req.body.subCategory
+            publishedAt: Date.now(), subcategory: req.body.subcategory,category: req.body.category
         }, { new: true })
 
-        res.status(200).send({ status: true, data: updatedBlog });
+        let upBlog = await blogModel.find({ _id: blogId });
+        res.status(200).send({ status: true, data: upBlog });
     } catch (err) {
         console.log(err)
         res.status(500).send({ msg: err.message })
@@ -87,7 +88,7 @@ const updateBlog = async function (req, res) {
 const deleteUser = async function (req, res) {
 
     try {
-        let blogId = req.query.blogId;
+        let blogId = req.params.blogId;
         let blog = await blogModel.findById(blogId);
 
         if (!blog) {
