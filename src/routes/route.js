@@ -10,7 +10,7 @@ const mid=require("../middleware/auth")
 router.post ("/authors",AuthorController.createAuthor)
 router.post ("/blog",mid.authentication,BlogController.createBlog)
 router.get("/getBlogsData",mid.authentication ,BlogController.getblogs)
-router.put("/updateBlogsData/:",mid.authentication,mid.authorization ,BlogController.updateBlog)
+router.put("/updateBlogsData/:blogId",mid.authentication,mid.authorization ,BlogController.updateBlog)
 router.delete("/deleteBlog/:blogId",mid.authentication,mid.authorization ,BlogController.deleteUser)
 router.delete("/deleteSpecific",mid.authentication,mid.authorization ,BlogController.deleteSpecificItem)
 

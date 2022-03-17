@@ -64,7 +64,7 @@ const getblogs = async function (req, res) {
 const updateBlog = async function (req, res) {
 
     try {
-        let blogId = req.query.blogId;
+        let blogId = req.params.blogId;
         let blog = await blogModel.findById(blogId);
 
         if (!blog) {
